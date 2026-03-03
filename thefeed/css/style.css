@@ -1,3 +1,4 @@
+/* ===== Feed Page: Back-Home Pikachu ===== */
 #pikachufeed {
     position: fixed;
     right: 85px;
@@ -22,6 +23,7 @@
     }
 }
 
+/* ===== Main Feed Card Layout ===== */
 .feed {
     display: flex;
     flex-direction: column;
@@ -67,6 +69,7 @@
     }
 }
 
+/* ===== Card Media + Typography ===== */
 .content {
     text-align: center;
 }
@@ -88,25 +91,28 @@
     align-items: stretch;
 }
 
-.card-bereal {
-    position: relative;
-    overflow: visible;
-}
-
-.card-bereal .card-corner-gif {
+/* Add a corner GIF on every feed card and alternate sides. */
+.feed .card::after {
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
     width: 200px;
-    max-width: none !important;
-    min-width: 0;
-    flex-shrink: 0;
-    height: auto;
-    margin: 0;
+    aspect-ratio: 1 / 1;
     display: block;
+    background-image: url("../img/pikadance.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
     transform: translate(28%, -28%);
     z-index: 3;
     pointer-events: none;
+}
+
+.feed .card:nth-child(even)::after {
+    left: 0;
+    right: auto;
+    transform: translate(-28%, -28%);
 }
 
 .card.roomy-card video.large-landscape {
@@ -145,6 +151,7 @@
     font-style: normal;
 }
 
+/* ===== Fixed Header + Background ===== */
 h1 {
     position: fixed;
     right: 20px;
@@ -169,6 +176,8 @@ body {
     background-attachment: fixed;
     cursor: url(../img/wii.cur);
 }
+
+/* ===== Shared Side Card Shell ===== */
 .side-card {
     position: fixed;
     top: 140px;
@@ -180,11 +189,22 @@ body {
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
+/* ===== Right/Left/Playlist Side Card Positioning ===== */
 .side-card-right {
     left: 24px;
     right: auto;
     top: 360px;
     width: 320px;
+    padding: 0;
+    overflow: visible;
+}
+
+.side-card-right > img:first-child {
+    width: 100%;
+    margin: 0;
+    display: block;
+    object-fit: cover;
+    border-radius: 12px;
 }
 
 .side-card-right .topcorner2 {
@@ -207,27 +227,6 @@ body {
     overflow: hidden;
 }
 
-.side-card-playlist .playlist-cover {
-    width: 60px !important;
-    height: 60px !important;
-    max-width: 60px !important;
-    min-width: 60px;
-    flex: 0 0 60px;
-    margin-top: -6px !important;
-    transform: none !important;
-}
-
-.side-card-playlist .playlist-title {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.2;
-    letter-spacing: 0.4px;
-    text-transform: none;
-    color: #e9f2ff;
-    -webkit-text-stroke: 0;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-}
-
 .side-card-left {
     left: 24px;
     top: 15px;
@@ -239,24 +238,7 @@ body {
     box-sizing: border-box;
 }
 
-.side-card-left .topcorner1 {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 80px;
-    height: auto;
-    margin: 0;
-    z-index: 2;
-}
-
-.side-card-left .content {
-    padding-right: 92px;
-    position: relative;
-    z-index: 1;
-}
-
-
-
+/* ===== Side Card Text/Image Defaults ===== */
 .side-card h2 {
     margin: 0 0 10px;
     font-family: "cc-pixel-arcade-display", sans-serif;
@@ -288,16 +270,17 @@ body {
     border-radius: 8px;
 }
 
+/* ===== Playlist Widget ===== */
 .playlist-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
+    width: 114%;
     height: 100%;
     background: #0f1420;
     color: #e9f2ff;
     text-decoration: none;
-    padding: 16px;
+    padding: 10px;
     border-radius: 12px;
     outline: 3px solid #e9f2ff;
     box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
@@ -336,7 +319,7 @@ body {
 .playlist-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     gap: 10px;
     flex-wrap: nowrap;
@@ -344,15 +327,18 @@ body {
     z-index: 1;
 }
 
+/* Playlist typography/content column */
 .playlist-cover {
     width: 60px;
     max-width: none;
     height: 60px;
+    min-width: 60px;
+    flex: 0 0 60px;
     border-radius: 10px;
     object-fit: cover;
     outline: 3px solid #e9f2ff;
     margin: 0;
-    transform: translateY(-6px);
+    transform: none;
 }
 
 .playlist-meta {
@@ -362,9 +348,13 @@ body {
 
 .playlist-title {
     margin: 0;
-    font-size: 16px;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: 0.4px;
+    text-transform: none;
+    color: #e9f2ff;
+    -webkit-text-stroke: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 .playlist-sub {
@@ -395,15 +385,14 @@ body {
 }
 
 .playlist-btn {
-    margin: 8px 0 0;
+    margin: 15px 0 0;
     display: inline-flex;
     align-self: flex-start;
     position: static;
     width: auto;
     min-width: 0;
-    top: 8px;
     gap: 8px;
-    padding: 6px 10px;
+    padding: 6px 17px;
     border-radius: 12px;
     outline: 3px solid #e9f2ff;
     background: #18233a;
@@ -425,15 +414,20 @@ body {
 }
 
 @keyframes playlist-blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0.1; }
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0.1;
+    }
 }
 
+/* Progress HUD */
 .playlist-progress-wrap {
     position: relative;
     z-index: 1;
     width: 78%;
-    margin-top: 14px;
+    margin-top: 23px;
     margin-left: 0;
     margin-right: auto;
 }
@@ -464,11 +458,12 @@ body {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
+/* ===== Collage Widget ===== */
 .side-card-collage {
     position: fixed;
     right: 24px;
     left: auto;
-    top: 260px;
+    top: 210px;
     width: 360px;
     padding: 0;
     box-sizing: border-box;
@@ -568,7 +563,6 @@ body {
     flex: 0 0 auto;
     padding: 6px 10px;
     border-radius: 12px;
-    font-size: 10px;
     border: 0;
     cursor: pointer;
     outline: 3px solid #e8f0ff;
@@ -595,10 +589,15 @@ body {
 }
 
 @keyframes collage-blink {
-    0%, 50% {opacity: 1;}
-    51%, 100% {opacity: 0.2;}
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0.2;
+    }
 }
 
+/* ===== Rotated Image Frame ===== */
 #rotate {
     position: absolute;
     top: 50%;
@@ -618,6 +617,7 @@ body {
     border-radius: 8px;
 }
 
+/* ===== Responsive Behavior ===== */
 @media (max-width: 1200px) {
     .side-card {
         display: none;

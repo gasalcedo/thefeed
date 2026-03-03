@@ -19,40 +19,43 @@
           </script>
     </head>
     <body>
-        <!-- Pokemon Music! -->
+        <!-- Background soundtrack for the landing page -->
         <audio id="bgMusic" autoplay loop>
             <source src="img/pokemon.mp3" type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
 
-        <!-- Pikachu noise! -->
+        <!-- Pikachu click sound effect used during page transition -->
         <audio id="pikachuSfx" preload="auto">
             <source src="img/pikapika.mp3" type="audio/mp3">
         </audio>
 
-        <!-- Music button! -->
+        <!-- User control to toggle background music on/off -->
         <button id="musicCueBtn" class="music-cue-btn" type="button">Start Music</button>
 
-        <!-- Header -->
+        <!-- Hero title text -->
         <h2 class="hero-title">
             <span class="title-part part-left">Let's help Pikachu</span>
             <span class="title-part part-up">find out what's going down</span>
             <span class="title-part part-right">at the feed!</span>
         </h2>
+        <!-- Decorative side characters -->
         <img src="img/pikachus.png" class="left-pikachus" alt="">
         <img src="img/pikachus2.png" class="right-pikachus" alt="">
+        <!-- Main call-to-action area -->
         <nav>
-            <p>
-                <div class="pikachu-wrap">
-                    <div class="arrow"> 
-                        <img src="img/tapme.gif" alt="">
-                    </div>
-                    <a href="thefeed/thefeed.html" class="pikachu-container">
-                        <img src="img/pikachurun.gif" id="pikachuindex" class="logo" width="400" alt="Enter the web"/>
-                    </a>
+            <div class="pikachu-wrap">
+                <!-- Animated "tap me" indicator above the CTA -->
+                <div class="arrow"> 
+                    <img src="img/tapme.gif" alt="">
                 </div>
-            </p>
+                <!-- Clickable Pikachu that transitions to the feed page -->
+                <a href="thefeed/thefeed.html" class="pikachu-container">
+                    <img src="img/pikachurun.gif" id="pikachuindex" class="logo" width="400" alt="Enter the web"/>
+                </a>
+            </div>
         </nav>
+        <!-- Landing page behavior script -->
         <script src="js/script.js" defer></script>
     </body>
 </html>

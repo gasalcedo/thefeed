@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // ---------------------------------------------------------------------------
+  // DOM helpers + element references
+  // ---------------------------------------------------------------------------
   const qs = (selector) => document.querySelector(selector);
 
-  // defining variables to html tags and css variables
+  // Cache core landing-page elements used for intro animation and interactions.
   const heading = qs("h1, h2");
   const logo = qs(".logo");
   const tapIndicator = qs(".arrow");
@@ -10,8 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const music = qs("#bgMusic");
   const musicCueBtn = qs("#musicCueBtn");
 
+  // Intro targets that fade/slide in when the page loads.
   const introElements = [heading, logo, tapIndicator].filter(Boolean);
-  const mainIntroElements = [heading, logo, tapIndicator].filter(Boolean);
+
+  // ---------------------------------------------------------------------------
+  // Intro animation helpers
+  // ---------------------------------------------------------------------------
+  // Click burst effect at the cursor position when Pikachu is clicked.
   const spawnCursorBurst = (x, y) => {
     const burst = document.createElement("span");
     burst.className = "cursor-burst";
@@ -38,15 +46,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }, durationMs);
   };
 
+  // ---------------------------------------------------------------------------
+  // Initial reveal
+  // ---------------------------------------------------------------------------
+  // Stage intro elements first, then reveal them with a staggered entrance.
   introElements.forEach((element) => stageElement(element));
 
   setTimeout(() => {
-    mainIntroElements.forEach((element) => revealElement(element, 1200));
+    introElements.forEach((element) => revealElement(element, 1200));
   }, 700);
 
+  // ---------------------------------------------------------------------------
+  // Pikachu transition behavior
+  // ---------------------------------------------------------------------------
   if (pikachuLink) {
     let isTransitioning = false;
 
+    // Match Pikachu run duration to the pikapika SFX length.
+    const setPikachuRunDuration = () => {
+      if (!pikachuSfx) return;
+      const duration = pikachuSfx.duration;
+      if (!Number.isFinite(duration) || duration <= 0) return;
+      document.body.style.setProperty("--pikachu-run-duration", `${duration}s`);
+    };
+
+    if (pikachuSfx) {
+      pikachuSfx.addEventListener("loadedmetadata", setPikachuRunDuration);
+      pikachuSfx.addEventListener("durationchange", setPikachuRunDuration);
+    }
+
+    // Handle transition to feed page when Pikachu is clicked.
     pikachuLink.addEventListener("click", (event) => {
       if (isTransitioning) {
         event.preventDefault();
@@ -59,26 +88,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
       event.preventDefault();
       isTransitioning = true;
-
       spawnCursorBurst(event.clientX, event.clientY);
+
+      // Start the run-off-screen animation after duration is known.
+      const startExit = () => {
+        setPikachuRunDuration();
+        document.body.classList.add("is-pikachu-exit");
+      };
 
       if (pikachuSfx) {
         pikachuSfx.currentTime = 0;
         void pikachuSfx.play();
+
+        if (Number.isFinite(pikachuSfx.duration) && pikachuSfx.duration > 0) {
+          startExit();
+        } else {
+          pikachuSfx.addEventListener("loadedmetadata", startExit, { once: true });
+        }
+
+        // Navigate after SFX finishes so movement/audio feel synchronized.
+        pikachuSfx.addEventListener(
+          "ended",
+          () => {
+            window.location.assign(pikachuLink.href);
+          },
+          { once: true }
+        );
+
+        return;
       }
 
-      document.body.classList.add("is-pikachu-exit");
-
-      const goToFeed = () => window.location.assign(pikachuLink.href);
-      if (logo) {
-        logo.addEventListener("animationend", goToFeed, {once: true})
-      } else {
-        goToFeed();
-      }
+      startExit();
     });
   }
 
+  // ---------------------------------------------------------------------------
+  // Background music widget behavior
+  // ---------------------------------------------------------------------------
   if (music && musicCueBtn) {
+    // Reflect current background music state in the floating button label/style.
     const setMusicButtonState = (isPlaying) => {
       musicCueBtn.textContent = isPlaying ? "Music: On" : "Music: Off";
       musicCueBtn.classList.toggle("is-active", isPlaying);
@@ -89,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setMusicButtonState(!music.paused);
     }, 700);
 
+    // Toggle looping background music from the on-screen control.
     musicCueBtn.addEventListener("click", async () => {
       if (music.paused) {
         await music.play();

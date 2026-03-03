@@ -1,15 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // ---------------------------------------------------------------------------
+  // DOM helpers + element references
+  // ---------------------------------------------------------------------------
+  // Lightweight query helpers used throughout this script.
   const qs = (selector) => document.querySelector(selector);
   const qsa = (selector) => Array.from(document.querySelectorAll(selector));
 
+  // Fixed UI blocks that animate into view on initial page load.
   const staticElements = [
     qs("h1"),
     qs("nav"),
     qs(".side-card-left"),
     qs(".side-card-right"),
     qs(".side-card-playlist"),
+    qs(".side-card-collage"),
   ].filter(Boolean);
+
+  // Feed cards reveal progressively as the user scrolls.
   const cards = qsa(".feed .card");
+
+  // Playlist card elements.
   const playlistAudio = qs("#playlistAudio");
   const playlistPlayBtn = qs("#playlistPlayBtn");
   const playlistBtnLabel = qs("#playlistBtnLabel");
@@ -18,10 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const playlistTimeCurrent = qs("#playlistTimeCurrent");
   const playlistTimeTotal = qs("#playlistTimeTotal");
 
+  // Collage widget elements.
   const collageImg = qs("#collageimg");
   const collagePlayButton = qs("#playbutton");
-  const collageStopButton =qs("#stopbutton");
+  const collageStopButton = qs("#stopbutton");
 
+  // ---------------------------------------------------------------------------
+  // Animation helpers
+  // ---------------------------------------------------------------------------
+  // Fade/slide-in animation used by fixed page elements.
   const animateStaticElement = (element, delayMs) => {
     const isNav = element.tagName === "NAV";
 
@@ -45,22 +60,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }, delayMs);
   };
 
+  // Marks a feed card as visible once observed in viewport.
   const revealCard = (card) => {
     card.classList.add("is-visible");
     card.classList.remove("is-hidden");
   };
 
+  // ---------------------------------------------------------------------------
+  // Initial reveal setup
+  // ---------------------------------------------------------------------------
+  // Apply staged entry animation to static elements.
   staticElements.forEach((element, index) => {
     animateStaticElement(element, 180 + index * 120);
   });
 
+  // Default cards to hidden state before intersection-driven reveal.
   cards.forEach((card) => card.classList.add("is-hidden"));
 
+  // Fallback for older browsers: reveal all cards immediately.
   if (!("IntersectionObserver" in window)) {
     cards.forEach(revealCard);
     return;
   }
 
+  // Reveal each feed card once it becomes visible in viewport.
   const cardObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
@@ -78,6 +101,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => cardObserver.observe(card));
 
+  // ---------------------------------------------------------------------------
+  // Playlist behavior
+  // ---------------------------------------------------------------------------
+  // Playlist controls and progress sync.
   if (
     playlistAudio &&
     playlistPlayBtn &&
@@ -87,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     playlistTimeCurrent &&
     playlistTimeTotal
   ) {
+    // Convert seconds to mm:ss.
     const formatTime = (seconds) => {
       if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
       const mins = Math.floor(seconds / 60);
@@ -94,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return `${mins}:${secs}`;
     };
 
+    // Update progress bar, aria value, and time labels.
     const updateProgress = () => {
       const duration = playlistAudio.duration || 0;
       const current = playlistAudio.currentTime || 0;
@@ -104,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
       playlistTimeTotal.textContent = formatTime(duration);
     };
 
+    // Toggle play/pause from button.
     playlistPlayBtn.addEventListener("click", async () => {
       if (playlistAudio.paused) {
         await playlistAudio.play();
@@ -112,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    // Keep button label synchronized with player state.
     playlistAudio.addEventListener("play", () => {
       playlistBtnLabel.textContent = "Pause";
     });
@@ -120,6 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
       playlistBtnLabel.textContent = "Play";
     });
 
+    // Keep progress/time UI updated as the track plays.
     playlistAudio.addEventListener("loadedmetadata", updateProgress);
     playlistAudio.addEventListener("timeupdate", updateProgress);
     playlistAudio.addEventListener("ended", () => {
@@ -128,6 +160,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ---------------------------------------------------------------------------
+  // Collage behavior
+  // ---------------------------------------------------------------------------
+  // Collage slideshow controls.
   if (collageImg && collagePlayButton && collageStopButton) {
     const collageFrames = [
       "img/album1.jpeg",
@@ -143,20 +179,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let collageTimer = null;
     collageImg.src = collageFrames[0];
 
+    // Advance one frame each tick.
     const showNextFrame = () => {
       collageIndex = (collageIndex + 1) % collageFrames.length;
       collageImg.src = collageFrames[collageIndex];
     };
 
+    // Start frame cycling every second.
     const playCollage = () => {
       if (collageTimer) return;
       showNextFrame();
       collageTimer = setInterval(showNextFrame, 1000);
-      collagePlayButton.textContent = "Playing...";
       collagePlayButton.disabled = true;
       collagePlayButton.innerHTML = '<span class="collage-cursor"></span>Playing....';
-    }
+    };
 
+    // Stop frame cycling and reset button state.
     const stopCollage = () => {
       clearInterval(collageTimer);
       collageTimer = null;

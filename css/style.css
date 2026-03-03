@@ -1,3 +1,4 @@
+/* ===== Landing Layout ===== */
 .pikachu-wrap {
     position: relative;
     display: flex;
@@ -17,13 +18,7 @@ nav {
     justify-content: center;
 }
 
-nav p {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
+/* ===== CTA Indicator + Click Burst ===== */
 .arrow {
     position: absolute;
     top: -18%;
@@ -89,6 +84,7 @@ nav p {
     }
 }
 
+/* ===== Main Pikachu CTA ===== */
 #pikachuindex {
     bottom: 0;
     left: 0;
@@ -104,7 +100,7 @@ nav p {
 }
 
 body.is-pikachu-exit #pikachuindex {
-    animation: pikachu-run-right 4.6s cubic-bezier(0.25, 0.7, 0.2, 1) forwards;
+    animation: pikachu-run-right var(--pikachu-run-duration, 4.6s) linear forwards;
 }
 
 body.is-pikachu-exit .arrow {
@@ -119,6 +115,7 @@ body.is-pikachu-exit .music-cue-btn {
     pointer-events: none;
 }
 
+/* ===== CTA/Character Animations ===== */
 @keyframes cta-glow {
     0%, 100% {
         filter: drop-shadow(0 0 0 rgba(255, 213, 0, 0));
@@ -142,10 +139,11 @@ body.is-pikachu-exit .music-cue-btn {
         transform: translateX(0) scale(1);
     }
     100% {
-        transform: translateX(120vw) scale(1.02);
+        transform: translateX(calc(50vw + 220px)) scale(1.02);
     }
 }
 
+/* ===== Hero Title ===== */
 h2 {
     margin: 100px auto 0;
     padding: 0;
@@ -195,20 +193,33 @@ h2 {
 }
 
 @keyframes drift-left {
-    from { transform: translateX(-10px) rotate(-1deg); }
-    to { transform: translateX(10px) rotate(1deg); }
+    from {
+        transform: translateX(-10px) rotate(-1deg);
+    }
+    to {
+        transform: translateX(10px) rotate(1deg);
+    }
 }
 
 @keyframes float-middle {
-    from { transform: translateY(-8px); }
-    to { transform: translateY(8px); }
+    from {
+        transform: translateY(-8px);
+    }
+    to {
+        transform: translateY(8px);
+    }
 }
 
 @keyframes drift-right {
-    from { transform: translateX(10px) rotate(1deg); }
-    to { transform: translateX(-10px) rotate(-1deg); }
+    from {
+        transform: translateX(10px) rotate(1deg);
+    }
+    to {
+        transform: translateX(-10px) rotate(-1deg);
+    }
 }
 
+/* ===== Decorative Side Characters ===== */
 .left-pikachus {
     position: fixed;
     left: 100px;
@@ -233,6 +244,7 @@ h2 {
     pointer-events: auto;
 }
 
+/* ===== Music Toggle Button ===== */
 .music-cue-btn {
     position: fixed;
     right: 20px;
@@ -263,6 +275,7 @@ h2 {
     background: #ffd770;
 }
 
+/* ===== Page/Base Styles ===== */
 html, body {
     margin: 0;
     min-height: 100vh;

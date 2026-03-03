@@ -24,28 +24,29 @@
         <!-- Pikachu: back to splash page! -->
         <h1>Back to home!</h1>
 
+        <!-- Navigation back to the landing page -->
         <nav>
-            <p>
-                <a href="../index.html">
-                    <img src="img/pikachuwave.gif" id="pikachufeed" class="logo" alt="Enter the web"/>
-                </a>
-            </p>
+            <a href="../index.html">
+                <img src="img/pikachuwave.gif" id="pikachufeed" class="logo" alt="Enter the web"/>
+            </a>
         </nav>
 
+        <!-- Left profile/info side card -->
         <aside class="side-card side-card-left">
             <div class="content">
                 <h2>Welcome to the feed!</h2>
                 <p>I am Gabe! A current junior who grew up very fond of Pokemon!</p>
                 <p>This is the feed where you will see a daily dose into my digital life.</p>
             </div>
-            <img src="img/pikachufloat.gif" class="topcorner1" alt="">
         </aside>
 
+        <!-- Right profile image side card -->
         <aside class="side-card side-card-right">
             <img src="img/gabe.jpg" width="300" alt=""/>
             <img src="img/game.png" class="topcorner2" alt="">
         </aside>
 
+        <!-- Interactive playlist side card -->
         <aside class="side-card side-card-playlist">
             <div class="playlist-card">
                 <div class="playlist-row">
@@ -55,16 +56,16 @@
                         <h3 class="playlist-title"> The Killers - Mr. Brightside </h3>
                         <p class="playlist-sub">MY GO TO SONG!</p>
 
-                        <button class="playlist-btn" id="playlistPlayBtn" type="button">
-                            <span class="playlist-cursor"></span>
-                            <span id="playlistBtnLabel">Play</span>
-                        </button>
-
                         <div class="playlist-hud">
                             <span class="playlist-tag">LVL 12</span>
                             <span class="playlist-tag">HP: ████████░░</span>
                             <span class="playlist-tag">MODE: LOOP</span>
                         </div>
+
+                        <button class="playlist-btn" id="playlistPlayBtn" type="button">
+                            <span class="playlist-cursor"></span>
+                            <span id="playlistBtnLabel">Play</span>
+                        </button>
                     </div>
                 </div>
 
@@ -84,6 +85,7 @@
             </div>
         </aside>
 
+        <!-- Collage/slideshow side card -->
         <aside class="side-card side-card-collage">
             <div class="collage-card">
                 <div class="collage-screen">
@@ -102,11 +104,12 @@
             </div>
         </aside>
 
+        <!-- Main vertical feed of media entries -->
         <div class="feed">
         <!-- Entry 1 -->
         <article class="card">
-            <video controls autoplay loop muted playsinline width="300" alt="">
-                <source src="./img/clashroyale.mp4" type="video/mp4" alt=""/>
+            <video controls autoplay loop muted playsinline width="300">
+                <source src="./img/clashroyale.mp4" type="video/mp4"/>
                 Your browser does not support the video tag.
             </video>
             <div class="content">
@@ -116,9 +119,8 @@
         </article>
 
         <!-- Entry 2 -->
-        <article class="card card-bereal">
-            <img src="./img/pikadance.gif" class="card-corner-gif" alt="">
-            <video controls autoplay loop muted playsinline width="300" alt="">
+        <article class="card">
+            <video controls autoplay loop muted playsinline width="300">
                 <source src="./img/bereal_vid1.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
@@ -130,8 +132,19 @@
 
         <!-- Entry 3 -->
         <article class="card">
-            <video controls autoplay loop muted playsinline width="300" alt=""> 
-                <source src="./img/studyingjapanese.mp4" type="video/mp4" alt=""/>
+            <video controls autoplay loop muted playsinline width="300">
+                <source src="./img/shopping.mp4" type="video/mp4"/>
+            </video>
+            <div class="content">
+                <h2>online shopping!</h2>
+                <p>i'm going to my first ever concert on the 10th of march and my friend let me know that concert fits are a must!</p>
+            </div>
+        </article>
+
+        <!-- Entry 4-->
+        <article class="card">
+            <video controls autoplay loop muted playsinline width="300"> 
+                <source src="./img/studyingjapanese.mp4" type="video/mp4"/>
                 Your browser does not support the video tag.
             </video>
             <div class="content">
@@ -140,10 +153,10 @@
             </div>
         </article>
 
-        <!-- Entry 4 -->
+        <!-- Entry 5 -->
         <article class="card">
-            <video controls autoplay loop muted playsinline width="300" alt="">
-                <source src="./img/duolingo.mp4" type="video/mp4" alt=""/>
+            <video controls autoplay loop muted playsinline width="300">
+                <source src="./img/duolingo.mp4" type="video/mp4"/>
                 Your browser does not support the video tag.
             </video>
             <div class="content">
@@ -152,10 +165,10 @@
             </div>
         </article>
 
-        <!-- Entry 5 -->
+        <!-- Entry 6 -->
         <article class="card">
-            <video controls autoplay loop muted playsinline width="300" alt="">
-                <source src="./img/underdogsuperbowl.mp4" type="video/mp4" alt=""/>
+            <video controls autoplay loop muted playsinline width="300">
+                <source src="./img/underdogsuperbowl.mp4" type="video/mp4"/>
                 Your browser does not support the video tag.
             </video>
             <div class="content">
@@ -164,10 +177,10 @@
             </div>
         </article>
 
-        <!-- Entry 6 -->
+        <!-- Entry 7 -->
         <article class="card">
-            <video controls autoplay loop muted playsinline width="300" alt="">
-                <source src="./img/pcnslack.mp4" type="video/mp4" alt=""/>
+            <video controls autoplay loop muted playsinline width="300">
+                <source src="./img/pcnslack.mp4" type="video/mp4"/>
             </video>
             <div class="content">
                 <h2>checking on practice updates!</h2>
@@ -175,7 +188,7 @@
             </div>
         </article>
 
-        <!-- Entry 7 -->
+        <!-- Entry 8 -->
         <article class="card roomy-card">
             <div class="rotate-frame">
                 <img src="./img/bereal_pic1.JPG" id="rotate" width="300" alt="bereal pt.2"/>
@@ -185,10 +198,10 @@
             </div>
         </article>
 
-        <!-- Entry 8 -->
+        <!-- Entry 9 -->
         <article class="card">
-            <video controls autoplay loop muted playsinline width="300" alt="">
-                <source src="./img/goinghome.mp4" type="video/mp4" alt=""/>
+            <video controls autoplay loop muted playsinline width="300">
+                <source src="./img/goinghome.mp4" type="video/mp4"/>
             </video>
             <div class="content">
                 <h2>going home</h2>
@@ -196,10 +209,10 @@
             </div>
         </article>
 
-        <!-- Entry 9 -->
+        <!-- Entry 10 -->
         <article class="card roomy-card">
-            <video class="large-landscape" controls autoplay loop muted playsinline width="300" alt="">
-                <source src="./img/youtube.mp4" type="video/mp4" alt=""/>
+            <video class="large-landscape" controls autoplay loop muted playsinline width="300">
+                <source src="./img/youtube.mp4" type="video/mp4"/>
                 Your browser does not support the video tag.
             </video>
             <div class="content">
@@ -208,10 +221,10 @@
             </div>
         </article>
 
-        <!-- Entry 10 -->
+        <!-- Entry 11 -->
         <article class="card roomy-card">
-            <video class="large-landscape" controls autoplay loop muted playsinline width="300" alt="">
-                <source src="./img/canvas.mp4" type="video/mp4" alt=""/>
+            <video class="large-landscape" controls autoplay loop muted playsinline width="300">
+                <source src="./img/canvas.mp4" type="video/mp4"/>
                 Your browser does not support the video tag.
             </video>
             <div class="content">
@@ -220,6 +233,7 @@
             </div>
         </article>
         </div>
+        <!-- Feed page behavior script -->
         <script src="js/script.js" defer></script>
     </body>
 </html>
